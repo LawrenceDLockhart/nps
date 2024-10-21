@@ -7,6 +7,7 @@ import com.example.nps.entities.QuestionRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SurveyService {
@@ -19,6 +20,11 @@ public class SurveyService {
         this.answerRepository = answerRepository;
     }
 
+    public Question getQuestion(Long id) {
+        Optional<Question> question = questionRepository.findById(id);
+        return question.orElse(null); // Or handle the case where the question is not found
+    }
+
     public void saveQuestion(Question question) {
         questionRepository.save(question);
     }
@@ -26,7 +32,10 @@ public class SurveyService {
     public void saveAnswer(Answer answer) {
         answerRepository.save(answer);
     }
-
+    // In SurveyService.java
+    public List<Answer> getAllAnswers() {
+        return answerRepository.findAll();
+    }
     public double calculateNPS(List<Answer> answers) {
         if (answers == null || answers.isEmpty()) {
             return 0; // Handle empty input
