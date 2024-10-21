@@ -21,14 +21,11 @@ public class Question {
     private List<Answer> answers = new ArrayList<>(); // Initialize the list
 
     public Question() {
-        // Default constructor
     }
 
     public Question(String text) {
         this.text = text;
     }
-
-    // Getters and setters for id, text, and survey
 
     public Long getId() {
         return id;

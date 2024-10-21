@@ -32,7 +32,6 @@ public class SurveyService {
     public void saveAnswer(Answer answer) {
         answerRepository.save(answer);
     }
-    // In SurveyService.java
     public List<Answer> getAllAnswers() {
         return answerRepository.findAll();
     }

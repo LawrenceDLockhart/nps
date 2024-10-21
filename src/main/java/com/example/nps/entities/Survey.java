@@ -11,7 +11,7 @@ public class Survey {
     private Long id;
 
     @OneToMany(mappedBy = "survey")
-    private List<Question> quetiions;
+    private List<Question> questions;
 
     public Long getId() {
         return id;

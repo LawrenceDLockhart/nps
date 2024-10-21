@@ -20,13 +20,13 @@ public class ResultsView extends VerticalLayout {
         H2 title = new H2("NPS Results");
         add(title);
 
-        List<Answer> answers = surveyService.getAllAnswers(); // Fetch all answers
+        List<Answer> answers = surveyService.getAllAnswers();
         double npsScore = surveyService.calculateNPS(answers);
 
         Paragraph npsDisplay = new Paragraph("NPS Score: " + npsScore);
         add(npsDisplay);
 
-        // You can add more components here to display other statistics,
+        // add more components here to display other statistics,
         // such as the number of promoters, detractors, and passives.
     }
 }

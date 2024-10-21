@@ -29,13 +29,11 @@ public class SurveyView extends VerticalLayout {
         score.setLabel(question.getText());
         add(score);
 
-        // Binder for data binding
         Binder<Answer> binder = new Binder<>(Answer.class);
         binder.forField(score)
                 .asRequired("Please select a score")
                 .bind(Answer::getScore, Answer::setScore);
 
-        // Submit button
         Button submitButton = new Button("Submit", event -> {
             Answer answer = new Answer();
             if (binder.writeBeanIfValid(answer)) {
@@ -50,7 +48,6 @@ public class SurveyView extends VerticalLayout {
         });
         add(submitButton);
 
-        // Add a link to the ResultsView
         RouterLink resultsLink = new RouterLink("View Results", ResultsView.class);
         add(resultsLink);
     }
