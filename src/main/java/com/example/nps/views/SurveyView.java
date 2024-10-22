@@ -12,7 +12,7 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 
-@Route("") // Set as the default view
+@Route("") 
 public class SurveyView extends VerticalLayout {
 
     private final SurveyService surveyService;

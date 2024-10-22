@@ -1,15 +1,16 @@
 package com.example.nps.entities;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Entity
 public class Question {
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id", nullable = false)
     private Long id;
 
     private String text;
@@ -19,6 +20,7 @@ public class Question {
 
     @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Answer> answers = new ArrayList<>(); // Initialize the list
+
 
     public Question() {
     }

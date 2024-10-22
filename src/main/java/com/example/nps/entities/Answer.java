@@ -1,6 +1,6 @@
 package com.example.nps.entities;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 
 @Entity
 public class Answer {
@@ -8,6 +8,7 @@ public class Answer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
     private Long id;
+
     private int score;
 
     @ManyToOne
