@@ -18,9 +18,8 @@ public class Question {
     @ManyToOne
     private Survey survey;
 
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<Answer> answers = new ArrayList<>(); // Initialize the list
-
+    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
+    private List<Answer> answers = new ArrayList<>();
 
     public Question() {
     }

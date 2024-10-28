@@ -14,7 +14,7 @@ public class ResultsView extends VerticalLayout {
 
     private final SurveyService surveyService;
 
-    public ResultsView(SurveyService surveyService) {
+    public ResultsView(SurveyService surveyService) throws InterruptedException {
         this.surveyService = surveyService;
 
         H2 title = new H2("NPS Results");

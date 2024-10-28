@@ -12,34 +12,56 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 
-@Route("") 
+import java.util.ArrayList;
+import java.util.List;
+
+@Route("")
 public class SurveyView extends VerticalLayout {
 
     private final SurveyService surveyService;
 
     public SurveyView(SurveyService surveyService) {
         this.surveyService = surveyService;
+        List<Answer> answers = new ArrayList<>();
+        List<Binder<Answer>> binders = new ArrayList<>(); // List to store Binders
 
         H2 title = new H2("NPS Survey");
         add(title);
-        Question question = surveyService.getQuestion(1L);
+        List<Question> questions = surveyService.getAllQuestions();
 
-        RadioButtonGroup<Integer> score = new RadioButtonGroup<>();
-        score.setItems(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-        score.setLabel(question.getText());
-        add(score);
+        for (Question question : questions) {
+            RadioButtonGroup<Integer> score = new RadioButtonGroup<>();
+            score.setItems(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+            score.setLabel(question.getText());
+            add(score);
 
-        Binder<Answer> binder = new Binder<>(Answer.class);
-        binder.forField(score)
-                .asRequired("Please select a score")
-                .bind(Answer::getScore, Answer::setScore);
+            Answer answer = new Answer();
+            answers.add(answer);
+
+            Binder<Answer> binder = new Binder<>(Answer.class);
+            binder.forField(score)
+                    .asRequired("Please select a score")
+                    .bind(Answer::getScore, Answer::setScore);
+            binders.add(binder); // Add the Binder to the list
+        }
 
         Button submitButton = new Button("Submit", event -> {
-            Answer answer = new Answer();
-            if (binder.writeBeanIfValid(answer)) {
+            boolean allQuestionsAnswered = true;
 
-                question.addAnswer(answer);
-                surveyService.saveAnswer(answer);
+            for (int i = 0; i < questions.size(); i++) {
+                Answer answer = answers.get(i);
+                Binder<Answer> binder = binders.get(i);
+
+                if (binder.writeBeanIfValid(answer)) {
+                    Question question = questions.get(i);
+                    question.addAnswer(answer);
+                    surveyService.saveAnswer(answer);
+                } else {
+                    allQuestionsAnswered = false;
+                }
+            }
+
+            if (allQuestionsAnswered) {
                 Notification.show("Thank you for your feedback!");
                 getUI().ifPresent(ui -> ui.navigate("results"));
             } else {

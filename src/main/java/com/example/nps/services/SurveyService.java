@@ -22,7 +22,7 @@ public class SurveyService {
 
     public Question getQuestion(Long id) {
         Optional<Question> question = questionRepository.findById(id);
-        return question.orElse(null); // Or handle the case where the question is not found
+        return question.orElse(null);
     }
 
     public void saveQuestion(Question question) {
@@ -32,12 +32,16 @@ public class SurveyService {
     public void saveAnswer(Answer answer) {
         answerRepository.save(answer);
     }
+
+    public List<Question> getAllQuestions() {
+        return questionRepository.findAll();
+    }
     public List<Answer> getAllAnswers() {
         return answerRepository.findAll();
     }
     public double calculateNPS(List<Answer> answers) {
         if (answers == null || answers.isEmpty()) {
-            return 0; // Handle empty input
+            return 0;
         }
 
         int promoters = 0;
