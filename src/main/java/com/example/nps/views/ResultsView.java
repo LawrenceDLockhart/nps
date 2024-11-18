@@ -2,8 +2,11 @@ package com.example.nps.views;
 
 import com.example.nps.entities.Answer;
 import com.example.nps.services.SurveyService;
+import com.vaadin.flow.component.charts.Chart;
+import com.vaadin.flow.component.charts.model.ChartType;
+import com.vaadin.flow.component.charts.model.Configuration;
+import com.vaadin.flow.component.charts.model.ListSeries;
 import com.vaadin.flow.component.html.H2;
-import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
@@ -14,7 +17,7 @@ public class ResultsView extends VerticalLayout {
 
     private final SurveyService surveyService;
 
-    public ResultsView(SurveyService surveyService) throws InterruptedException {
+    public ResultsView(SurveyService surveyService) {
         this.surveyService = surveyService;
 
         H2 title = new H2("NPS Results");
@@ -23,10 +26,13 @@ public class ResultsView extends VerticalLayout {
         List<Answer> answers = surveyService.getAllAnswers();
         double npsScore = surveyService.calculateNPS(answers);
 
-        Paragraph npsDisplay = new Paragraph("NPS Score: " + npsScore);
-        add(npsDisplay);
+        // Create a simple chart to display the NPS score
+        Chart chart = new Chart(ChartType.COLUMN);
+        Configuration conf = chart.getConfiguration();
+        conf.setTitle("NPS Score");
+        ListSeries series = new ListSeries("NPS", npsScore);
+        conf.addSeries(series);
 
-        // add more components here to display other statistics,
-        // such as the number of promoters, detractors, and passives.
+        add(chart);
     }
 }

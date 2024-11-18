@@ -23,10 +23,12 @@ public class SurveyView extends VerticalLayout {
     public SurveyView(SurveyService surveyService) {
         this.surveyService = surveyService;
         List<Answer> answers = new ArrayList<>();
-        List<Binder<Answer>> binders = new ArrayList<>(); // List to store Binders
+        List<Binder<Answer>> binders = new ArrayList<>();
 
         H2 title = new H2("NPS Survey");
         add(title);
+
+        // Fetch questions dynamically
         List<Question> questions = surveyService.getAllQuestions();
 
         for (Question question : questions) {
@@ -42,7 +44,7 @@ public class SurveyView extends VerticalLayout {
             binder.forField(score)
                     .asRequired("Please select a score")
                     .bind(Answer::getScore, Answer::setScore);
-            binders.add(binder); // Add the Binder to the list
+            binders.add(binder);
         }
 
         Button submitButton = new Button("Submit", event -> {
@@ -54,7 +56,7 @@ public class SurveyView extends VerticalLayout {
 
                 if (binder.writeBeanIfValid(answer)) {
                     Question question = questions.get(i);
-                    question.addAnswer(answer);
+                    question.addAnswer(answer); // Assuming you have addAnswer() in Question
                     surveyService.saveAnswer(answer);
                 } else {
                     allQuestionsAnswered = false;
