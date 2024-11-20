@@ -15,6 +15,8 @@ public class Question {
 
     private String text;
 
+    private String questionType;
+
     @ManyToOne
     private Survey survey;
 
@@ -42,6 +44,14 @@ public class Question {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public String getQuestionType() {
+        return questionType;
+    }
+
+    public void setQuestionType(String questionType) {
+        this.questionType = questionType;
     }
 
     public Survey getSurvey() {

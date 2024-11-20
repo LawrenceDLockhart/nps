@@ -20,7 +20,7 @@ public class ResultsView extends VerticalLayout {
     public ResultsView(SurveyService surveyService) {
         this.surveyService = surveyService;
 
-        H2 title = new H2("NPS Results");
+        H2 title = new H2("Survey Results");
         add(title);
 
         List<Answer> answers = surveyService.getAllAnswers();
@@ -28,8 +28,8 @@ public class ResultsView extends VerticalLayout {
 
         Chart chart = new Chart(ChartType.COLUMN);
         Configuration conf = chart.getConfiguration();
-        conf.setTitle("NPS Score");
-        ListSeries series = new ListSeries("NPS", npsScore);
+        conf.setTitle("Survey Score");
+        ListSeries series = new ListSeries("Survey", npsScore);
         conf.addSeries(series);
 
         add(chart);

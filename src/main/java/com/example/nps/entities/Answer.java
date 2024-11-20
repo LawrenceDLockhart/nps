@@ -10,6 +10,7 @@ public class Answer {
     private Long id;
 
     private int score;
+    private String textAnswer;
 
     @ManyToOne
     private Question question;
@@ -28,5 +29,13 @@ public class Answer {
 
     public void setScore(int score) {
         this.score = score;
+    }
+
+    public String getTextAnswer() {
+        return textAnswer;
+    }
+
+    public void setTextAnswer(String textAnswer) {
+        this.textAnswer = textAnswer;
     }
 }

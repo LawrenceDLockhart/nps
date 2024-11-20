@@ -8,6 +8,7 @@ import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.radiobutton.RadioButtonGroup;
+import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
@@ -15,7 +16,7 @@ import com.vaadin.flow.router.RouterLink;
 import java.util.ArrayList;
 import java.util.List;
 
-@Route("")
+@Route("survey")
 public class SurveyView extends VerticalLayout {
 
     private final SurveyService surveyService;
@@ -24,27 +25,37 @@ public class SurveyView extends VerticalLayout {
         this.surveyService = surveyService;
         List<Answer> answers = new ArrayList<>();
         List<Binder<Answer>> binders = new ArrayList<>();
+        H2 title = new H2("Survey");
 
-        H2 title = new H2("NPS Survey");
-        add(title);
-
-        // Fetch questions dynamically
         List<Question> questions = surveyService.getAllQuestions();
-
         for (Question question : questions) {
-            RadioButtonGroup<Integer> score = new RadioButtonGroup<>();
-            score.setItems(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
-            score.setLabel(question.getText());
-            add(score);
+            if (question.getQuestionType().equals("radio")){
+                RadioButtonGroup<Integer> score = new RadioButtonGroup<>();
+                score.setItems(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+                score.setLabel(question.getText());
+                add(score);
 
-            Answer answer = new Answer();
-            answers.add(answer);
+                Answer answer = new Answer();
+                answers.add(answer);
+                Binder<Answer> binder = new Binder<>(Answer.class);
+                binder.forField(score)
+                        .asRequired("Please select a score")
+                        .bind(Answer::getScore, Answer::setScore);
+                binders.add(binder);
+            } else if (question.getQuestionType().equals("text")) {
+                TextField userResponse = new TextField();
+                userResponse.setLabel(question.getText());
+                add(userResponse);
+                Answer answer = new Answer();
+                answers.add(answer);
 
-            Binder<Answer> binder = new Binder<>(Answer.class);
-            binder.forField(score)
-                    .asRequired("Please select a score")
-                    .bind(Answer::getScore, Answer::setScore);
-            binders.add(binder);
+                Binder<Answer> binder = new Binder<>(Answer.class);
+                binder.forField(userResponse)
+                        .asRequired("Please enter your answer")
+                        .bind(Answer::getTextAnswer, Answer::setTextAnswer);
+                binders.add(binder);
+            }
+
         }
 
         Button submitButton = new Button("Submit", event -> {
@@ -70,7 +81,7 @@ public class SurveyView extends VerticalLayout {
                 Notification.show("Please fill in all required fields.");
             }
         });
-        add(submitButton);
+        add(title, submitButton);
 
         RouterLink resultsLink = new RouterLink("View Results", ResultsView.class);
         add(resultsLink);
