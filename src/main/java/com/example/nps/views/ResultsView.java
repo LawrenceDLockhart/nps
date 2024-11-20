@@ -26,7 +26,6 @@ public class ResultsView extends VerticalLayout {
         List<Answer> answers = surveyService.getAllAnswers();
         double npsScore = surveyService.calculateNPS(answers);
 
-        // Create a simple chart to display the NPS score
         Chart chart = new Chart(ChartType.COLUMN);
         Configuration conf = chart.getConfiguration();
         conf.setTitle("NPS Score");

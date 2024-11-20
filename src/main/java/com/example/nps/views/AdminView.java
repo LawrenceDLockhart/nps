@@ -25,7 +25,6 @@ public class AdminView extends VerticalLayout {
         H2 title = new H2("Admin Panel");
         add(title);
 
-        // Question Management
         questionGrid = new Grid<>(Question.class, false);
         questionGrid.addColumn(Question::getText).setHeader("Question Text");
         questionGrid.setItems(surveyService.getAllQuestions());
