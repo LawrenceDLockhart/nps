@@ -67,7 +67,8 @@ public class SurveyView extends VerticalLayout {
 
                 if (binder.writeBeanIfValid(answer)) {
                     Question question = questions.get(i);
-                    question.addAnswer(answer); // Assuming you have addAnswer() in Question
+                    answer.setQuestion(question);
+                    question.addAnswer(answer);
                     surveyService.saveAnswer(answer);
                 } else {
                     allQuestionsAnswered = false;

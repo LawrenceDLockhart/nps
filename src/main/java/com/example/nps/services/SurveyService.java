@@ -4,8 +4,10 @@ import com.example.nps.entities.Answer;
 import com.example.nps.entities.Question;
 import com.example.nps.entities.AnswerRepository;
 import com.example.nps.entities.QuestionRepository;
+import com.vaadin.flow.component.charts.model.DataSeriesItem;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -39,27 +41,21 @@ public class SurveyService {
     public List<Answer> getAllAnswers() {
         return answerRepository.findAll();
     }
-    public double calculateNPS(List<Answer> answers) {
-        if (answers == null || answers.isEmpty()) {
-            return 0;
-        }
 
-        int promoters = 0;
-        int detractors = 0;
-        int totalResponses = answers.size();
+    public List<Answer> getAnswersForQuestion(Question question) {
+        return answerRepository.findByQuestion(question);
+    }
+
+    public List<DataSeriesItem> getScoreDataPoints(Question question) {
+        List<Answer> answers = getAnswersForQuestion(question);
+        List<DataSeriesItem> dataPoints = new ArrayList<>();
 
         for (Answer answer : answers) {
-            int score = answer.getScore();
-            if (score >= 9) {
-                promoters++;
-            } else if (score <= 6) {
-                detractors++;
-            }
+                DataSeriesItem item = new DataSeriesItem();
+                item.setY(answer.getScore());
+                dataPoints.add(item);
         }
 
-        double promoterPercentage = (double) promoters / totalResponses * 100;
-        double detractorPercentage = (double) detractors / totalResponses * 100;
-
-        return promoterPercentage - detractorPercentage;
+        return dataPoints;
     }
 }

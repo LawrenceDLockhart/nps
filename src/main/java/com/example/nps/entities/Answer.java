@@ -10,7 +10,16 @@ public class Answer {
     private Long id;
 
     private int score;
+    @Column(name = "textAnswer")
     private String textAnswer;
+
+    public Question getQuestion() {
+        return question;
+    }
+
+    public void setQuestion(Question question) {
+        this.question = question;
+    }
 
     @ManyToOne
     private Question question;
@@ -27,7 +36,7 @@ public class Answer {
         return score;
     }
 
-    public void setScore(int score) {
+    public void setScore(Integer score) {
         this.score = score;
     }
 
