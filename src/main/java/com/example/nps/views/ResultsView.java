@@ -3,12 +3,17 @@ package com.example.nps.views;
 import com.example.nps.entities.Answer;
 import com.example.nps.entities.Question;
 import com.example.nps.services.SurveyService;
+import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.charts.Chart;
 import com.vaadin.flow.component.charts.model.*;
+import com.vaadin.flow.component.details.Details;
 import com.vaadin.flow.component.html.H2;
+import com.vaadin.flow.component.html.H3;
+import com.vaadin.flow.component.html.Paragraph;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.router.Route;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Route("results")
@@ -46,6 +51,14 @@ public class ResultsView extends VerticalLayout {
                     DataSeries series = new DataSeries(question.getText());
                     series.setData(dataPoints);
                     conf.addSeries(series);
+                }  else if (question.getQuestionType().equals("text")) {
+                    List<Answer> answer = surveyService.getAnswersForQuestion(question);
+                    List<Component> answerComponents = new ArrayList<>();
+                    for (Answer a : answer) {
+                        answerComponents.add(new Paragraph(a.getTextAnswer()));
+                    }
+                    Details details = new Details(question.getText(), answerComponents.toArray(new Component[0]));
+                    add(details);
                 }
             }
             add(chart);
