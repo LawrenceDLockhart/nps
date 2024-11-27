@@ -49,7 +49,7 @@ public class QuestionsView extends AppLayout {
         });
 
         ComboBox<String> typeSelector = new ComboBox<>("Question Type");
-        typeSelector.setItems("radio", "text");
+        typeSelector.setItems("1-10 Scale", "Open Text");
         questionBinder.forField(typeSelector)
                 .asRequired("Question type is required")
                 .bind(Question::getQuestionType, Question::setQuestionType);
