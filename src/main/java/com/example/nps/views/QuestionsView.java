@@ -1,11 +1,11 @@
 package com.example.nps.views;
 
-import com.example.nps.entities.Answer;
 import com.example.nps.entities.Question;
 import com.example.nps.services.SurveyService;
+import com.vaadin.flow.component.applayout.AppLayout;
+import com.vaadin.flow.component.applayout.DrawerToggle;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
-import com.vaadin.flow.component.combobox.MultiSelectComboBox;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.component.html.H2;
 import com.vaadin.flow.component.orderedlayout.FlexComponent;
@@ -14,9 +14,10 @@ import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.Route;
+import com.vaadin.flow.router.RouterLink;
 
 @Route("questions")
-public class QuestionsView extends VerticalLayout {
+public class QuestionsView extends AppLayout {
 
     private final SurveyService surveyService;
     private final Grid<Question> questionGrid;
@@ -25,8 +26,8 @@ public class QuestionsView extends VerticalLayout {
     public QuestionsView(SurveyService surveyService) {
         this.surveyService = surveyService;
 
-        H2 title = new H2("Admin Panel");
-        add(title);
+        createHeader();
+        createDrawer();
 
         questionGrid = new Grid<>(Question.class, false);
         questionGrid.addColumn(Question::getText).setHeader("Question Text");
@@ -34,7 +35,9 @@ public class QuestionsView extends VerticalLayout {
 
         questionBinder = new Binder<>(Question.class);
         TextField questionField = new TextField("New Question");
-        questionBinder.forField(questionField).asRequired("Question text is required").bind(Question::getText, Question::setText);
+        questionBinder.forField(questionField)
+                .asRequired("Question text is required")
+                .bind(Question::getText, Question::setText);
 
         Button addQuestionButton = new Button("Add Question", event -> {
             Question newQuestion = new Question();
@@ -45,7 +48,6 @@ public class QuestionsView extends VerticalLayout {
             }
         });
 
-
         ComboBox<String> typeSelector = new ComboBox<>("Question Type");
         typeSelector.setItems("radio", "text");
         questionBinder.forField(typeSelector)
@@ -54,6 +56,21 @@ public class QuestionsView extends VerticalLayout {
 
         HorizontalLayout questionLayout = new HorizontalLayout(questionField, typeSelector, addQuestionButton);
         questionLayout.setAlignItems(FlexComponent.Alignment.BASELINE);
-        add(questionLayout, questionGrid);
+
+        // Set the content of the AppLayout
+        setContent(new VerticalLayout(questionLayout, questionGrid));
+    }
+
+    private void createHeader() {
+        H2 title = new H2("Question Dashboard");
+        HorizontalLayout header = new HorizontalLayout(new DrawerToggle(), title);
+        addToNavbar(header);
+    }
+
+    private void createDrawer() {
+        RouterLink questionsLink = new RouterLink("Questions", QuestionsView.class);
+        RouterLink resultsLink = new RouterLink("Results", ResultsView.class);
+        RouterLink surveyLink = new RouterLink("Survey", SurveyView.class);
+        addToDrawer(new VerticalLayout(questionsLink, resultsLink, surveyLink));
     }
 }
