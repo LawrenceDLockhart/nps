@@ -76,10 +76,11 @@ public class SurveyView extends VerticalLayout {
             }
 
             if (allQuestionsAnswered) {
-                Notification.show("Thank you for your feedback!");
                 for (Binder<Answer> binder : binders) {
                     binder.refreshFields();
                 }
+                removeAll();
+                add(new H2("Thank you for your feedback!"));
 //                getUI().ifPresent(ui -> ui.navigate("results"));
             } else {
                 Notification.show("Please fill in all required fields.");
