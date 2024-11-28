@@ -29,7 +29,7 @@ public class ResultsView extends VerticalLayout {
         List<Question> questions = surveyService.getAllQuestions();
         if (questions != null && !questions.isEmpty()) {
 
-            Chart chart = new Chart(ChartType.COLUMN);
+            Chart chart = new Chart(ChartType.BAR);
             Configuration conf = chart.getConfiguration();
             conf.setTitle("Survey Results");
 
