@@ -44,13 +44,13 @@ public class ResultsView extends VerticalLayout {
             conf.addyAxis(yAxis);
 
             for (Question question : questions) {
-                if (question.getQuestionType().equals("radio")) {
+                if (question.getQuestionType().equals("1-10 Scale")) {
                     List<DataSeriesItem> dataPoints = surveyService.getScoreDataPoints(question);
 
                     DataSeries series = new DataSeries(question.getText());
                     series.setData(dataPoints);
                     conf.addSeries(series);
-                }  else if (question.getQuestionType().equals("text")) {
+                }  else if (question.getQuestionType().equals("Open Text")) {
                     List<Answer> answer = surveyService.getAnswersForQuestion(question);
                     List<Component> answerComponents = new ArrayList<>();
                     for (Answer a : answer) {

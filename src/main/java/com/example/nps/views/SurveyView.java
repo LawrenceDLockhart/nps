@@ -29,7 +29,7 @@ public class SurveyView extends VerticalLayout {
 
         List<Question> questions = surveyService.getAllQuestions();
         for (Question question : questions) {
-            if (question.getQuestionType().equals("radio")){
+            if (question.getQuestionType().equals("1-10 Scale")){
                 RadioButtonGroup<Integer> score = new RadioButtonGroup<>();
                 score.setItems(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
                 score.setLabel(question.getText());
@@ -42,7 +42,7 @@ public class SurveyView extends VerticalLayout {
                         .asRequired("Please select a score")
                         .bind(Answer::getScore, Answer::setScore);
                 binders.add(binder);
-            } else if (question.getQuestionType().equals("text")) {
+            } else if (question.getQuestionType().equals("Open Text")) {
                 TextField userResponse = new TextField();
                 userResponse.setLabel(question.getText());
                 add(userResponse);
@@ -77,11 +77,15 @@ public class SurveyView extends VerticalLayout {
 
             if (allQuestionsAnswered) {
                 Notification.show("Thank you for your feedback!");
+                for (Binder<Answer> binder : binders) {
+                    binder.refreshFields();
+                }
 //                getUI().ifPresent(ui -> ui.navigate("results"));
             } else {
                 Notification.show("Please fill in all required fields.");
             }
         });
+
         add(title, submitButton);
 
         RouterLink resultsLink = new RouterLink("View Results", ResultsView.class);

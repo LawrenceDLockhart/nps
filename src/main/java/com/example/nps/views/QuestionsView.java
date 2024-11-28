@@ -45,6 +45,7 @@ public class QuestionsView extends AppLayout {
                 surveyService.saveQuestion(newQuestion);
                 questionGrid.setItems(surveyService.getAllQuestions());
                 questionField.clear();
+                questionBinder.refreshFields();
             }
         });
 
