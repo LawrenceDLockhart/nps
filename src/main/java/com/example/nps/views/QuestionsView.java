@@ -35,6 +35,8 @@ public class QuestionsView extends AppLayout {
 
         questionBinder = new Binder<>(Question.class);
         TextField questionField = new TextField("New Question");
+        questionField.setWidth("410px");
+        questionField.setPlaceholder("Enter a new question");
         questionBinder.forField(questionField)
                 .asRequired("Question text is required")
                 .bind(Question::getText, Question::setText);
