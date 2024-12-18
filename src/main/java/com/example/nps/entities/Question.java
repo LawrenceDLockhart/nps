@@ -1,6 +1,7 @@
 package com.example.nps.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,15 +14,13 @@ public class Question {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @NotNull
     private String text;
 
-    private String questionType;
+    private QuestionType questionType;
 
     @ManyToOne
     private Survey survey;
-
-    @OneToMany(mappedBy = "question", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
-    private List<Answer> answers = new ArrayList<>();
 
     public Question() {
     }
@@ -46,11 +45,11 @@ public class Question {
         this.text = text;
     }
 
-    public String getQuestionType() {
+    public QuestionType getQuestionType() {
         return questionType;
     }
 
-    public void setQuestionType(String questionType) {
+    public void setQuestionType(QuestionType questionType) {
         this.questionType = questionType;
     }
 
@@ -62,19 +61,4 @@ public class Question {
         this.survey = survey;
     }
 
-    public List<Answer> getAnswers() {
-        return answers;
-    }
-
-    public void setAnswers(List<Answer> answers) {
-        this.answers = answers;
-    }
-
-    public void addAnswer(Answer answer) {
-        answers.add(answer);
-    }
-
-    public void removeAnswer(Answer answer) {
-        answers.remove(answer);
-    }
 }

@@ -1,6 +1,9 @@
 package com.example.nps.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Max;
+
 
 @Entity
 public class Answer {
@@ -32,6 +35,8 @@ public class Answer {
         this.id = id;
     }
 
+    @Min(1)
+    @Max(10)
     public int getScore() {
         return score;
     }

@@ -1,6 +1,7 @@
 package com.example.nps.views;
 
 import com.example.nps.entities.Question;
+import com.example.nps.entities.QuestionType;
 import com.example.nps.services.SurveyService;
 import com.vaadin.flow.component.applayout.AppLayout;
 import com.vaadin.flow.component.applayout.DrawerToggle;
@@ -16,8 +17,10 @@ import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
 
+import java.util.Arrays;
+
 @Route("questions")
-public class QuestionsView extends AppLayout {
+public class QuestionsView extends MainLayout {
 
     private final SurveyService surveyService;
     private final Grid<Question> questionGrid;
@@ -25,9 +28,6 @@ public class QuestionsView extends AppLayout {
 
     public QuestionsView(SurveyService surveyService) {
         this.surveyService = surveyService;
-
-        createHeader();
-        createDrawer();
 
         questionGrid = new Grid<>(Question.class, false);
         questionGrid.addColumn(Question::getText).setHeader("Question Text");
@@ -51,8 +51,10 @@ public class QuestionsView extends AppLayout {
             }
         });
 
-        ComboBox<String> typeSelector = new ComboBox<>("Question Type");
-        typeSelector.setItems("1-10 Scale", "Open Text");
+        ComboBox<QuestionType> typeSelector = new ComboBox<>("Question Type");
+        typeSelector.setItems(QuestionType.values());
+        typeSelector.setItemLabelGenerator(QuestionType::name); // Use the enum's name() method
+
         questionBinder.forField(typeSelector)
                 .asRequired("Question type is required")
                 .bind(Question::getQuestionType, Question::setQuestionType);
@@ -77,3 +79,49 @@ public class QuestionsView extends AppLayout {
         addToDrawer(new VerticalLayout(questionsLink, resultsLink, surveyLink));
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

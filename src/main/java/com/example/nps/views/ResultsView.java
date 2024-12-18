@@ -2,6 +2,7 @@ package com.example.nps.views;
 
 import com.example.nps.entities.Answer;
 import com.example.nps.entities.Question;
+import com.example.nps.entities.QuestionType;
 import com.example.nps.services.SurveyService;
 import com.vaadin.flow.component.Component;
 import com.vaadin.flow.component.charts.Chart;
@@ -44,13 +45,13 @@ public class ResultsView extends VerticalLayout {
             conf.addyAxis(yAxis);
 
             for (Question question : questions) {
-                if (question.getQuestionType().equals("1-10 Scale")) {
+                if (question.getQuestionType().equals(QuestionType.ONE_TO_TEN_SCALE)) {
                     List<DataSeriesItem> dataPoints = surveyService.getScoreDataPoints(question);
 
                     DataSeries series = new DataSeries(question.getText());
                     series.setData(dataPoints);
                     conf.addSeries(series);
-                }  else if (question.getQuestionType().equals("Open Text")) {
+                }  else if (question.getQuestionType().equals(QuestionType.OPEN_TEXT)) {
                     List<Answer> answer = surveyService.getAnswersForQuestion(question);
                     List<Component> answerComponents = new ArrayList<>();
                     for (Answer a : answer) {
