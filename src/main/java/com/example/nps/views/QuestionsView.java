@@ -13,6 +13,7 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.binder.BeanValidationBinder;
 import com.vaadin.flow.data.binder.Binder;
 import com.vaadin.flow.router.Route;
 import com.vaadin.flow.router.RouterLink;
@@ -53,7 +54,7 @@ public class QuestionsView extends MainLayout {
 
         ComboBox<QuestionType> typeSelector = new ComboBox<>("Question Type");
         typeSelector.setItems(QuestionType.values());
-        typeSelector.setItemLabelGenerator(QuestionType::name); // Use the enum's name() method
+        typeSelector.setItemLabelGenerator(QuestionType::name);
 
         questionBinder.forField(typeSelector)
                 .asRequired("Question type is required")

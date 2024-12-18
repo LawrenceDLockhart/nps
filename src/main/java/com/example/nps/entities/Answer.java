@@ -34,9 +34,7 @@ public class Answer {
     public void setId(Long id) {
         this.id = id;
     }
-
-    @Min(1)
-    @Max(10)
+    
     public int getScore() {
         return score;
     }

@@ -2,6 +2,7 @@ package com.example.nps.views;
 
 import com.example.nps.entities.Answer;
 import com.example.nps.entities.Question;
+import com.example.nps.entities.QuestionType;
 import com.example.nps.services.SurveyService;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.html.H2;
@@ -29,24 +30,26 @@ public class SurveyView extends VerticalLayout {
 
         List<Question> questions = surveyService.getAllQuestions();
         for (Question question : questions) {
-            if (question.getQuestionType().equals("1-10 Scale")){
+            if (question.getQuestionType().equals(QuestionType.ONE_TO_TEN_SCALE)){
                 RadioButtonGroup<Integer> score = new RadioButtonGroup<>();
                 score.setItems(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
                 score.setLabel(question.getText());
                 add(score);
 
                 Answer answer = new Answer();
+                answer.setQuestion(question);
                 answers.add(answer);
                 Binder<Answer> binder = new Binder<>(Answer.class);
                 binder.forField(score)
                         .asRequired("Please select a score")
                         .bind(Answer::getScore, Answer::setScore);
                 binders.add(binder);
-            } else if (question.getQuestionType().equals("Open Text")) {
+            } else if (question.getQuestionType().equals(QuestionType.OPEN_TEXT)) {
                 TextField userResponse = new TextField();
                 userResponse.setLabel(question.getText());
                 add(userResponse);
                 Answer answer = new Answer();
+                answer.setQuestion(question);
                 answers.add(answer);
 
                 Binder<Answer> binder = new Binder<>(Answer.class);
@@ -73,7 +76,6 @@ public class SurveyView extends VerticalLayout {
                     allQuestionsAnswered = false;
                 }
             }
-
             if (allQuestionsAnswered) {
                 for (Binder<Answer> binder : binders) {
                     binder.refreshFields();

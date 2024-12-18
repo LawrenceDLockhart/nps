@@ -1,6 +1,7 @@
 package com.example.nps.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 
 import java.util.ArrayList;
@@ -15,12 +16,13 @@ public class Question {
     private Long id;
 
     @NotNull
+    @NotBlank
     private String text;
 
+    @Enumerated(EnumType.STRING)
+    @Column(name = "questionType", nullable = false)
+    @NotNull
     private QuestionType questionType;
-
-    @ManyToOne
-    private Survey survey;
 
     public Question() {
     }
@@ -51,14 +53,6 @@ public class Question {
 
     public void setQuestionType(QuestionType questionType) {
         this.questionType = questionType;
-    }
-
-    public Survey getSurvey() {
-        return survey;
-    }
-
-    public void setSurvey(Survey survey) {
-        this.survey = survey;
     }
 
 }
