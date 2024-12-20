@@ -1,9 +1,6 @@
 package com.example.nps.entities;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.Max;
-
 
 @Entity
 public class Answer {
@@ -34,7 +31,7 @@ public class Answer {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     public int getScore() {
         return score;
     }
