@@ -32,6 +32,7 @@ public class QuestionsView extends MainLayout {
 
         questionGrid = new Grid<>(Question.class, false);
         questionGrid.addColumn(Question::getText).setHeader("Question Text");
+        questionGrid.addColumn(Question::getQuestionType).setHeader("Question Type");
         questionGrid.setItems(surveyService.getAllQuestions());
 
         questionBinder = new Binder<>(Question.class);

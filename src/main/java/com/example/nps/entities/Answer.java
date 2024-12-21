@@ -1,6 +1,10 @@
 package com.example.nps.entities;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 @Entity
 public class Answer {
@@ -9,8 +13,12 @@ public class Answer {
     @Column(name = "id", nullable = false)
     private Long id;
 
+    @Min(1)
+    @Max(10)
     private int score;
     @Column(name = "textAnswer")
+    @Size(max = 255)
+    @NotBlank
     private String textAnswer;
 
     public Question getQuestion() {

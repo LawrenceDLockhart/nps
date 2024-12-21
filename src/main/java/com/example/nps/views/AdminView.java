@@ -14,24 +14,5 @@ public class AdminView extends MainLayout {
 
     public AdminView() {
         setContent(new Div("Admin View"));
-//        createHeader();
-//        createDrawer();
-//        createMainContent();
-    }
-//    private void createHeader() {
-//        H2 title = new H2("Admin Panel");
-//        HorizontalLayout header = new HorizontalLayout(new DrawerToggle(), title);
-//        addToNavbar(header);
-//    }
-//
-//    private void createDrawer() {
-//        RouterLink questionsLink = new RouterLink("Questions", QuestionsView.class);
-//        RouterLink resultsLink = new RouterLink("Results", ResultsView.class);
-//        RouterLink surveyLink = new RouterLink("Survey", SurveyView.class);
-//        addToDrawer(new VerticalLayout(questionsLink, resultsLink, surveyLink));
-//    }
-//
-//    private void createMainContent() {
-//
-//    }
+   }
 }
